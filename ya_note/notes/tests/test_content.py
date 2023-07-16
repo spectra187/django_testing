@@ -11,9 +11,9 @@ class TestNoteList(CoreTestCase):
         )
         for client, value in clients:
             with self.subTest(client=client):
-                object_list = client.get(URL.list).context['object_list']
+                notes_list = client.get(URL.list).context['object_list']
                 self.assertTrue(
-                    (self.note in object_list) is value,
+                    (self.note in notes_list) is value,
                     msg=(
                         f'{client} не должен видеть заметки других '
                         f'пользователей в своем списке заметок.'

@@ -6,7 +6,7 @@ from notes.tests.core import URL, CoreTestCase, AUTHOR, USER, ANON
 class TestRoutes(CoreTestCase):
     def test_pages_availability_for_anonymous_user(self):
         """Проверка доступности страниц анонимному пользователю."""
-        urls = (
+        URLS = (
             (URL.home, self.client, HTTPStatus.OK, ANON),
             (URL.login, self.client, HTTPStatus.OK, ANON),
             (URL.logout, self.client, HTTPStatus.OK, ANON),
@@ -21,7 +21,7 @@ class TestRoutes(CoreTestCase):
             (URL.detail, self.author_client, HTTPStatus.OK, AUTHOR),
             (URL.detail, self.user_client, HTTPStatus.NOT_FOUND, USER),
         )
-        for url, client, expected_status, user in urls:
+        for url, client, expected_status, user in URLS:
             with self.subTest(url=url):
                 self.assertEqual(
                     client.get(url).status_code,
@@ -34,7 +34,7 @@ class TestRoutes(CoreTestCase):
 
     def test_redirects(self):
         """Проверка редиректа для неавторизованного пользователя."""
-        urls = (
+        URLS = (
             URL.list,
             URL.add,
             URL.success,
@@ -42,7 +42,7 @@ class TestRoutes(CoreTestCase):
             URL.edit,
             URL.delete,
         )
-        for url in urls:
+        for url in URLS:
             with self.subTest(url=url):
                 redirect_url = f'{URL.login}?next={url}'
                 self.assertRedirects(

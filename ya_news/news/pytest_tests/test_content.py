@@ -13,11 +13,11 @@ pytestmark = pytest.mark.django_db
 def test_news_count_order(client, news_list):
     """Проверка: новости выводятся по дате и в нужном кол-ве."""
     response = client.get(URL.home)
-    object_list = list(response.context['object_list'])
-    assert len(object_list) == settings.NEWS_COUNT_ON_HOME_PAGE
-    assert isinstance(object_list[0].date, date)
-    assert object_list == sorted(
-        object_list, key=lambda x: x.date, reverse=True
+    news_list = list(response.context['object_list'])
+    assert len(news_list) == settings.NEWS_COUNT_ON_HOME_PAGE
+    assert isinstance(news_list[0].date, date)
+    assert news_list == sorted(
+        news_list, key=lambda x: x.date, reverse=True
     )
 
 
